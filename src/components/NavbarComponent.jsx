@@ -7,13 +7,15 @@ import logo from '../assets/logo.png';
 // icons
 import { CiUser, CiHeart, CiShoppingCart } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
+import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import CategoryComponent from './CategoryComponent';
 
 function NavbarComponent() {
 	return (
 		<div className=''>
 			<HeadingComponent />
-			<nav className='bg-mainBlue h-[100px]'>
-				<div className='container mx-auto flex items-center h-full justify-between'>
+			<nav className='bg-mainBlue h-full lg:h-[100px] py-[20px]'>
+				<div className='container mx-auto flex flex-col lg:flex-row items-center h-full justify-between gap-[20px]'>
 					{/* logotip */}
 					<img src={logo} alt='logo' />
 
@@ -33,10 +35,20 @@ function NavbarComponent() {
 					<div>
 						<ul className='flex-center gap-[20px]'>
 							<li className='flex-center'>
-								<CiUser color='white' size={25} />
-								<Link to='/' className='text-whiteTextColor'>
-									SignIn
-								</Link>
+								
+								<SignedOut>
+									<SignInButton />
+								</SignedOut>
+								<SignedIn>
+									<UserButton afterSignOutUrl='/' showName={true} appearance={{
+										elements: {
+											avatarBox: 'w-[40px] h-[40px]'
+										},
+										variables: {
+											colorText: '#f90'
+										}
+									}}/>
+								</SignedIn>
 							</li>
 							<li className='flex-center gap-[10px]'>
 								<div className='flex-center'>
@@ -60,6 +72,8 @@ function NavbarComponent() {
 					</div>
 				</div>
 			</nav>
+			<CategoryComponent />
+			
 		</div>
 	);
 }
