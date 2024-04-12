@@ -5,7 +5,7 @@ import HeadingComponent from './HeadingComponent';
 import logo from '../assets/logo.png';
 
 // icons
-import { CiUser, CiHeart, CiShoppingCart } from 'react-icons/ci';
+import { CiHeart, CiShoppingCart } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import CategoryComponent from './CategoryComponent';
@@ -17,7 +17,9 @@ function NavbarComponent() {
 			<nav className='bg-mainBlue h-full lg:h-[100px] py-[20px]'>
 				<div className='container mx-auto flex flex-col lg:flex-row items-center h-full justify-between gap-[20px]'>
 					{/* logotip */}
-					<img src={logo} alt='logo' />
+					<Link to='/'>
+						<img src={logo} alt='logo' />
+					</Link>
 
 					{/* search bar */}
 					<div className='bg-whiteTextColor rounded-[20px]'>

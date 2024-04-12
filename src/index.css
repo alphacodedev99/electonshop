@@ -13,4 +13,13 @@
 	.badge {
 		@apply bg-mainYellow w-[20px] h-[20px] rounded-full  flex-center justify-center;
 	}
+
+	@keyframes spinner {
+		0% {
+		  transform: rotate(0deg);
+		}
+		100% {
+		  transform: rotate(360deg);
+		}
+	  }
 }
