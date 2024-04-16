@@ -9,8 +9,14 @@ import { CiHeart, CiShoppingCart } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import CategoryComponent from './CategoryComponent';
+import { useSelector } from 'react-redux';
 
 function NavbarComponent() {
+
+	const {totalProduct} = useSelector(state => state.cartStore);
+
+
+
 	return (
 		<div className=''>
 			<HeadingComponent />
@@ -64,7 +70,7 @@ function NavbarComponent() {
 							<li className='flex-center gap-[10px]'>
 								<div className='flex-center'>
 									<CiShoppingCart color='white' size={25} />
-									<span className='badge'>0</span>
+									<span className='badge'>{totalProduct}</span>
 								</div>
 								<Link to={'/cart'} className='text-whiteTextColor'>
 									Cart
