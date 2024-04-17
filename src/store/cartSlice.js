@@ -30,8 +30,6 @@ const cartSlice = createSlice({
             }else{
                 copyArray[findIndex].count++;
             }
-            
-
             state.cart = copyArray
 
         },
@@ -54,14 +52,43 @@ const cartSlice = createSlice({
 
             if(findIndex !== null){
                copyArray.splice(findIndex,1);
+               state.totalProduct--;
+               state.totalPrice = subTotal(copyArray)
             }
 
             state.cart = copyArray;
+        },
+        setPriceHandler: (state, action) => {
+            // console.log(action.payload);
+            const {increment, index} = action.payload;
+
+            let copyArray = [...state.cart];
+
+            copyArray[index].cartTotal += copyArray[index].price * increment;
+
+            state.totalPrice = subTotal(copyArray);
+
+            if(copyArray[index].count === 1 && increment === -1){
+                copyArray.splice(index,1);
+                state.totalProduct--;
+            }else{
+                copyArray[index].count += increment
+            }
+
+
+            state.cart = copyArray
         }
     }
 });
 
 // hendluj cartTotal
+function subTotal(arrayCart) {
+    return arrayCart.reduce((acc, current) => {
+        return acc + current.cartTotal;
+    },0)
+}
 
-export const {saveInCartAction,deleteItemCartAction} = cartSlice.actions;
+
+
+export const {saveInCartAction,deleteItemCartAction,setPriceHandler} = cartSlice.actions;
 export default cartSlice.reducer;

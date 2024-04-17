@@ -1,32 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductsService from '../services/productsService';
 
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { saveAllProductsAction } from '../store/productsSlice';
 import CardProductComponent from '../components/CardProductComponent';
 
+// icons
+import { FaList } from 'react-icons/fa';
+import { IoGridOutline } from 'react-icons/io5';
+
 function HomePage() {
-	// 1 step - ???? useSelector
-	const {allProducts} = useSelector(state => state.productStore)
+	const [activeView, setActiveView] = useState('listView');
+
+	const { allProducts, currentCategory } = useSelector(
+		(state) => state.productStore
+	);
+	// TODO: add loader for products&categories
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		ProductsService.getAllProducts()
-			.then(res => dispatch(saveAllProductsAction(res.data.products)))
-			.catch(err => console.log(err))
-	}, [])
+		if (currentCategory === 'allProducts') {
+			ProductsService.getAllProducts()
+				.then((res) =>
+					dispatch(saveAllProductsAction(res.data.products))
+				)
+				.catch((err) => console.log(err));
+		} else {
+			ProductsService.getAllProductsByCategory(currentCategory)
+				.then((res) =>
+					dispatch(saveAllProductsAction(res.data.products))
+				)
+				.catch((err) => console.log(err));
+		}
+	}, [currentCategory]);
 
-	return <main className='container mx-auto'>
-		{/* grid/list view */}
+	return (
+		<main className='container mx-auto'>
+			{/* grid/list view */}
 
-		{/* Our products */}
-		{/* wrapper div */}
-		<div className='flex flex-wrap items-center justify-center mt-[50px] gap-8 '>
-			{allProducts.map((product) => {
-				return <CardProductComponent key={product.id} product={product}/> 
-			})}
-		</div>
-	</main>;
+			<div className='flex justify-end mt-[20px] mr-[20px] gap-[10px]'>
+				<button onClick={() => setActiveView('listView')}
+				className={activeView === 'listView' ? 'layoutView' : 'p-[5px]'}
+				
+				>
+					{' '}
+					<FaList size={30} />{' '}
+				</button>
+				<button onClick={() => setActiveView('gridView')} className={activeView === 'gridView' ? 'layoutView' : 'p-[5px]'}>
+					{' '}
+					<IoGridOutline size={30} />{' '}
+				</button>
+			</div>
+
+			{/* Our products */}
+			{/* wrapper div */}
+			<div className={activeView === 'listView' ? 'grid grid-cols-1 gap-[20px] mt-[20px]' : 'grid grid-cols-1 md:gird-cols-2 lg:grid-cols-3 2xl:grid-cols-4 place-items-center gap-[20px] mt-[20px]'}>
+				{allProducts.map((product) => {
+					return (
+						<CardProductComponent
+							activeView={activeView}
+							key={product.id}
+							product={product}
+						/>
+					);
+				})}
+			</div>
+		</main>
+	);
 }
 
 export default HomePage;

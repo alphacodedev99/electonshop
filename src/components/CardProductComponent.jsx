@@ -1,13 +1,13 @@
 import { Rating } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-function CardProductComponent({product}) {
+function CardProductComponent({product, activeView}) {
     // console.log(product)
   return (
-    <div className='w-[300px] h-full border border-mainBlue rounded-lg flex flex-col items-center gap-[15px] cursor-pointer'>
+    <div className={activeView === 'listView' ? 'w-full flex items-center justify-between border-mainBlue border-b pb-[15px]' : 'w-[300px] h-full border border-mainBlue rounded-lg flex flex-col items-center gap-[15px] cursor-pointer'}>
         {/* product.image ? img sa slikom : img neka dummySlika */}
-        <div className='relative w-full'>
-            <img src={product.thumbnail} alt={product.title} className='h-[150px] w-full object-cover rounded-t-lg' />
+        <div className={activeView === 'listView' ? 'relative w-[100px] h-[100px]' : 'relative w-full'}>
+            <img src={product.thumbnail} alt={product.title} className={activeView === 'listView' ? 'w-[100px] h-[100px] object-cover' : 'w-full h-[200px] object-cover'} />
             {/* overlay */}
             <div className='absolute inset-0 bg-[#000] opacity-60 rounded-t-lg hover:opacity-0 transition-all duration-300 cursor-pointer'/>
         </div>
@@ -16,7 +16,9 @@ function CardProductComponent({product}) {
         <span className='text-mainYellow'>${product.price}</span>
 
         {/* rating === zvezdice */}
-        <Rating name="half-rating" defaultValue={product.rating} precision={0.5} readOnly/>
+        <div className='hidden lg:block'>
+             <Rating name="half-rating" defaultValue={product.rating} precision={0.5} readOnly />
+        </div>
 
         <Link 
             to={`/singleProduct/${product.id}`} 
