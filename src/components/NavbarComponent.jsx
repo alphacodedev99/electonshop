@@ -45,7 +45,7 @@ function NavbarComponent() {
 						<ul className='flex-center gap-[20px]'>
 							<li className='flex-center'>
 								
-								<SignedOut>
+								{/* <SignedOut>
 									<SignInButton />
 								</SignedOut>
 								<SignedIn>
@@ -57,7 +57,7 @@ function NavbarComponent() {
 											colorText: '#f90'
 										}
 									}}/>
-								</SignedIn>
+								</SignedIn> */}
 							</li>
 							<li className='flex-center gap-[10px]'>
 								<div className='flex-center'>

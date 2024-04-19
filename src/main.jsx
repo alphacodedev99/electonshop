@@ -63,10 +63,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+		{/* <ClerkProvider publishableKey={PUBLISHABLE_KEY}> */}
 			<Provider store={store}>
 				<RouterProvider router={router} />
 			</Provider>
-		</ClerkProvider>
+		{/* </ClerkProvider> */}
 	</React.StrictMode>
 );
